@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -25,11 +27,69 @@
             </ui:define>
 
             <ui:define name="content">
-                content
-            </ui:define>
+                 <h:panelGroup class="center">
+                    <h:form>
+                        <h:panelGrid columns="2"> 
+                            <h:column>
+                                <h:outputLabel for="promjenaId">ID</h:outputLabel>
+                            </h:column>
+                            <h:column>                            
+                                <h:inputText id="promjenaId" value="#{pregledPromjena.searchId}"></h:inputText>
+                            </h:column>
 
-            <ui:define name="bottom">
-                bottom
+                            <h:column>
+                                <h:outputLabel for="naziv">Naziv</h:outputLabel>
+                            </h:column>
+                            <h:column>
+                                <h:inputText id="naziv" value="#{pregledPromjena.searchNaziv}"></h:inputText>
+                            </h:column>
+                            
+                            <h:column></h:column>
+                            <h:column>
+                                <h:commandButton action="#{pregledPromjena.filtrirajPodatke}" value="Filtriraj">
+                                    <f:ajax execute="promjenaId naziv" render="promjene" />
+                                </h:commandButton>
+                            </h:column>
+
+
+                        </h:panelGrid> 
+
+                        <h:panelGroup id="promjene">
+                            <h:panelGrid columns="1">
+                                <h3>Pregled promjena</h3>
+                                <h:column>
+                                    <p:dataTable var="promjena" value="#{pregledPromjena.promjene}">
+                                        <p:column headerText="PID">
+                                            <h:outputText value="#{promjena.pid}" />
+                                        </p:column>
+                                        <p:column headerText="ID">
+                                            <h:outputText value="#{promjena.id}" />
+                                        </p:column>
+                                        <p:column headerText="Naziv">
+                                            <h:outputText value="#{promjena.naziv}" />
+                                        </p:column>
+                                        <p:column headerText="Status">
+                                            <h:outputText value="#{promjena.status}" />
+                                        </p:column>
+                                        <p:column headerText="Latitude">
+                                            <h:outputText value="#{promjena.latitude}" />
+                                        </p:column>
+                                        <p:column headerText="Longitude">
+                                            <h:outputText value="#{promjena.longitude}" />
+                                        </p:column>
+                                        <p:column headerText="Vrijeme kreiranja">
+                                            <h:outputText value="#{pomocnoZrno.formatDate(promjena.vrijemeKreiranja)}" />
+                                        </p:column>
+                                        <p:column headerText="Vrijeme promjene">
+                                            <h:outputText value="#{pomocnoZrno.formatDate(promjena.vrijemePromjene)}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:column>
+                            </h:panelGrid>
+                        </h:panelGroup>
+
+                    </h:form>
+                </h:panelGroup>
             </ui:define>
 
         </ui:composition>

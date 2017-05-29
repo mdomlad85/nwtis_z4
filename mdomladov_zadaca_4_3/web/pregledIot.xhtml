@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -27,13 +29,14 @@
             <ui:define name="content">
                 <h:panelGroup class="center">
                     <h:form>
-                        <h:panelGrid columns="3"> 
+                        <h:panelGrid columns="4"> 
                             <h:column>
                                 <h:outputLabel for="uredjajId">ID</h:outputLabel>
                             </h:column>
                             <h:column>                            
                                 <h:inputText id="uredjajId" value="#{odabirIoTPrognoza.id}"></h:inputText>
                             </h:column>
+                            <h:column></h:column>
                             <h:column></h:column>
 
                             <h:column>
@@ -43,39 +46,162 @@
                                 <h:inputText id="naziv" value="#{odabirIoTPrognoza.naziv}"></h:inputText>
                             </h:column>
                             <h:column></h:column>
+                            <h:column></h:column>
 
                             <h:column>
                                 <h:outputLabel for="adresa">Adresa</h:outputLabel>
                             </h:column>
                             <h:column>
-                                <h:inputText id="adresa" value="#{odabirIoTPrognoza.adresa}"></h:inputText>
+                                <h:inputText  id="adresa" value="#{odabirIoTPrognoza.adresa}"></h:inputText>
                             </h:column>
                             <h:column>
-                                <h:commandButton action="#{odabirIoTPrognoza.azurirajIotUredjaj()}" value="Upiši"></h:commandButton>
+                                <h:commandButton action="#{odabirIoTPrognoza.dodajIotUredjaj}" value="Dodaj IoT uređaj">
+                                    <f:ajax execute="uredjajId naziv adresa" render="raspoloziviUredjaji uredjajId naziv adresa errorMsg successMsg" />
+                                </h:commandButton>
                             </h:column>
-                           
+                            <h:column></h:column>
+
                             <h:column> <br/>Raspoloživi IoT uređaji</h:column>
                             <h:column> <br/></h:column>
                             <h:column> <br/>Odabrani IoT uređaji</h:column>
-                            
+                            <h:column></h:column>
+
                             <h:column>
-                                 
-                            </h:column>                            
-                             <h:column>
-                                <h:commandButton class="botun" value="Preuzmi"></h:commandButton>
-                                <br/>
-                                <br/>
-                                <h:commandButton class="botun" value="Vrati"></h:commandButton>
-                                <br/>
-                                <br/>
-                                <h:commandButton class="botun" value="Ažuriraj"></h:commandButton>
+                                <h:selectManyListbox id="raspoloziviUredjaji"
+                                                     value="#{odabirIoTPrognoza.listaRaspolozivihIota}">
+                                    <f:selectItems value="#{odabirIoTPrognoza.raspoloziviUredjaji}" var="u"
+                                                   itemValue="#{u.vrijednost}" itemLabel="#{u.labela}" />
+                                </h:selectManyListbox>
                             </h:column>                            
                             <h:column>
-                                
+                                <h:commandButton action="#{odabirIoTPrognoza.preuzmi}" class="botun" value="Preuzmi">
+                                    <f:ajax execute="raspoloziviUredjaji" render="raspoloziviUredjaji odabraniUredjaji btnAzuriraj azuriranje btnPrognoze prognoze" />
+                                </h:commandButton>
+                                <br/>
+                                <br/>
+                                <h:commandButton action="#{odabirIoTPrognoza.vrati}" class="botun" value="Vrati">
+                                    <f:ajax execute="odabraniUredjaji" render="raspoloziviUredjaji odabraniUredjaji btnAzuriraj azuriranje btnPrognoze prognoze" />
+                                </h:commandButton>
+                                <br/>
+                                <br/>
+                                <h:commandButton class="botun" style="display: #{odabirIoTPrognoza.displayAzurirajBtn}; text-align: center" value="Ažuriraj" id="btnAzuriraj" action="#{odabirIoTPrognoza.omoguciAzuriranjeForm}">
+                                    <f:ajax execute="odabraniUredjaji" render="azuriranje" />
+                                </h:commandButton>
+                            </h:column>                            
+                            <h:column>
+                                <h:selectManyListbox id="odabraniUredjaji"
+                                                     value="#{odabirIoTPrognoza.listaIotaZaVracanje}">
+                                    <f:selectItems value="#{odabirIoTPrognoza.odabraniUredjaji}" var="u"
+                                                   itemValue="#{u.vrijednost}" itemLabel="#{u.labela}" />
+                                </h:selectManyListbox>
                             </h:column>
-                            
-                            
+                            <h:column>
+                                <h:commandButton 
+                                    class="botun" style="display: #{odabirIoTPrognoza.displayPrognozeBtn}; text-align: center" 
+                                    value="#{odabirIoTPrognoza.displayPrognozeBtnText}" 
+                                    id="btnPrognoze" 
+                                    action="#{odabirIoTPrognoza.otvoriZatvoriPrognozePregled}">                                    
+                                        <f:ajax execute="odabraniUredjaji" render="prognoze btnPrognoze" />
+                                </h:commandButton>
+                            </h:column>
+
+
                         </h:panelGrid>
+
+                        <h:panelGroup style="display: #{odabirIoTPrognoza.displayAzuriraj}" id="azuriranje">
+                            <h:panelGrid columns="3">
+                                <h:column>
+                                    <h:outputLabel for="uredjajIdEdit">ID</h:outputLabel>
+                                </h:column>
+                                <h:column>                            
+                                    <h:inputText id="uredjajIdEdit" value="#{odabirIoTPrognoza.idEdit}"></h:inputText>
+                                </h:column>
+                                <h:column></h:column>
+
+                                <h:column>
+                                    <h:outputLabel for="nazivEdit">Naziv</h:outputLabel>
+                                </h:column>
+                                <h:column>
+                                    <h:inputText id="nazivEdit" value="#{odabirIoTPrognoza.nazivEdit}"></h:inputText>
+                                </h:column>
+                                <h:column></h:column>
+
+                                <h:column>
+                                    <h:outputLabel for="adresaEdit">Adresa</h:outputLabel>
+                                </h:column>
+                                <h:column>
+                                    <h:inputText id="adresaEdit" value="#{odabirIoTPrognoza.adresaEdit}"></h:inputText>
+                                </h:column>
+                                <h:column>
+                                    <h:commandButton action="#{odabirIoTPrognoza.urediIotUredjaj}" value="Upiši">
+                                        <f:ajax execute="uredjajIdEdit nazivEdit adresaEdit" render=" errorMsg successMsg azuriranje btnAzuriraj odabraniUredjaji raspoloziviUredjaji" />
+                                    </h:commandButton>
+                                </h:column>
+                            </h:panelGrid>
+                        </h:panelGroup>
+
+                        <h:panelGrid columns="1">
+                            <h:column>
+                                <h:outputText value="#{odabirIoTPrognoza.porukaPogreska}" id="errorMsg" style="color:red" />
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{odabirIoTPrognoza.porukaUspjeha}" id="successMsg" style="color:green" />
+                            </h:column>
+                        </h:panelGrid>
+
+                        <h:panelGroup style="display: #{odabirIoTPrognoza.displayPrognoze}" id="prognoze">
+                            <h:panelGrid columns="1">
+                                <h3>Pregled prognoza</h3>
+                                <h:column>
+                                    <p:dataTable var="meteo" value="#{odabirIoTPrognoza.meteoPrognoza}">
+                                        <p:column headerText="Prognoza za">
+                                            <h:outputText value="#{pomocnoZrno.formatDate(meteo.prognoza.lastUpdate)}" />
+                                        </p:column>
+                                        <p:column headerText="ID">
+                                            <h:outputText value="#{meteo.id}" />
+                                        </p:column>
+                                        <p:column headerText="Naziv uređaja">
+                                            <h:outputText value="#{meteo.prognoza.naziv}" />
+                                        </p:column>
+                                        <p:column headerText="Vrijeme">
+                                            <h:outputText value="#{meteo.prognoza.weatherValue}" />
+                                        </p:column>
+                                        <p:column headerText="Tlak">
+                                            <h:outputText value="#{meteo.prognoza.pressureValue}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.prognoza.pressureUnit}" />
+                                        </p:column>
+                                        <p:column headerText="Temperatura">
+                                            <h:outputText value="#{meteo.prognoza.temperatureValue}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.prognoza.temperatureUnit}" />
+                                        </p:column>
+                                        <p:column headerText="Max Temp">
+                                            <h:outputText value="#{meteo.prognoza.temperatureMax}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.prognoza.temperatureUnit}" />
+                                        </p:column>
+                                        <p:column headerText="Min Temp">
+                                            <h:outputText value="#{meteo.prognoza.temperatureMin}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.prognoza.temperatureUnit}" />
+                                        </p:column>
+                                        <p:column headerText="Vlaga">
+                                            <h:outputText value="#{meteo.prognoza.humidityValue}" />
+                                            &nbsp;
+                                            <h:outputText value="#{meteo.prognoza.humidityUnit}" />
+                                        </p:column>
+                                        <p:column headerText="Vjetar smjer">
+                                            <h:outputText value="#{meteo.prognoza.windDirectionValue}" />
+                                        </p:column>
+                                        <p:column headerText="Vjetar brzina">
+                                            <h:outputText value="#{meteo.prognoza.windSpeedValue}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:column>
+                            </h:panelGrid>
+                        </h:panelGroup>
+
                     </h:form>
                 </h:panelGroup>
             </ui:define>

@@ -11,32 +11,32 @@ package org.foi.nwtis.mdomladov.web.podaci;
  */
 public class Izbornik {
     
-    private String key;
+    private String vrijednost;
     
-    private String value;
+    private String labela;
 
     public Izbornik() {
     }
 
-    public Izbornik(String key, String value) {
-        this.key = key;
-        this.value = value;
+    public Izbornik(String vrijednost, String labela) {
+        this.vrijednost = vrijednost;
+        this.labela = labela;
     }
 
-    public String getKey() {
-        return key;
+    public String getVrijednost() {
+        return vrijednost;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setVrijednost(String vrijednost) {
+        this.vrijednost = vrijednost;
     }
 
-    public String getValue() {
-        return value;
+    public String getLabela() {
+        return labela;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setLabela(String labela) {
+        this.labela = labela;
     }
     
     

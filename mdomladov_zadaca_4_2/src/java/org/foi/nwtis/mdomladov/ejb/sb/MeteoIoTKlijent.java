@@ -41,5 +41,18 @@ public class MeteoIoTKlijent {
                 lokacija.getLatitude(), 
                 lokacija.getLongitude());
     }
+
+    public String dajAdresu(Lokacija lokacija) {
+        GMKlijent gmklijent = new GMKlijent();
+        
+        return gmklijent.getAdresaByLocation(lokacija);
+    }
+
+    public String dajAdresu(double latitude, double longitude) {
+        GMKlijent gmklijent = new GMKlijent();
+        Lokacija lokacija = new Lokacija(String.valueOf(latitude), String.valueOf(longitude));
+        
+        return gmklijent.getAdresaByLocation(lokacija);
+    }
     
 }

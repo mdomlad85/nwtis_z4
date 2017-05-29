@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -25,10 +27,112 @@
             </ui:define>
 
             <ui:define name="content">
-                content
+                <h:panelGroup class="center">
+                    <h:form>
+                        <h:panelGrid columns="2"> 
+                            <h:column>
+                                <h:outputLabel for="korisnik">Korisnik</h:outputLabel>
+                            </h:column>                            
+                            <h:column>                            
+                                <h:inputText id="korisnik" value="#{pregledDnevnika.korisnik}"></h:inputText>
+                            </h:column>
+
+                            <h:column>
+                                <h:outputLabel for="status">Status</h:outputLabel>
+                            </h:column>                            
+                            <h:column>                            
+                                <h:inputText id="status" value="#{pregledDnevnika.status}"></h:inputText>
+                            </h:column>
+
+                            <h:column>
+                                <h:outputLabel for="trajanje">Trajanje</h:outputLabel>
+                            </h:column>                            
+                            <h:column>                            
+                                <h:inputText id="trajanje" value="#{pregledDnevnika.trajanje}"></h:inputText>
+                            </h:column>
+
+                            <h:column>
+                                <h:outputLabel for="ipAdresa">IP adresa</h:outputLabel>
+                            </h:column>                            
+                            <h:column>                            
+                                <h:inputText id="ipAdresa" value="#{pregledDnevnika.ipAdresa}"></h:inputText>
+                            </h:column>
+
+                            <h:column>
+                                <h:outputLabel for="url">URL</h:outputLabel>
+                            </h:column>                            
+                            <h:column>                            
+                                <h:inputText id="url" value="#{pregledDnevnika.url}"></h:inputText>
+                            </h:column>
+
+                            <h:column>
+                                <h:outputLabel for="datumOd">Datum od</h:outputLabel>
+                            </h:column>                            
+                            <h:column>                            
+                                <p:calendar id="datumOd" 
+                                            value="#{pregledDnevnika.datumOd}" 
+                                            locale="#{pomocnoZrno.locale}" 
+                                            navigator="true" 
+                                            pattern="#{pomocnoZrno.formatDatuma}" />
+                            </h:column>
+
+                            <h:column>
+                                <h:outputLabel for="datumDo">Datum do</h:outputLabel>
+                            </h:column>                            
+                            <h:column>                            
+                                <p:calendar id="datumDo" 
+                                            value="#{pregledDnevnika.datumDo}" 
+                                            locale="#{pomocnoZrno.locale}" 
+                                            navigator="true" 
+                                            pattern="#{pomocnoZrno.formatDatuma}" />
+                            </h:column>
+
+                            <h:column></h:column>
+                            <h:column>
+                                <h:commandButton action="#{pregledDnevnika.filtriraj}" value="Filtriraj">
+                                    <f:ajax execute="korisnik status trajanje ipAdresa datumOd datumDo url" render="dnevnik" />
+                                </h:commandButton>
+                            </h:column>
+
+
+                        </h:panelGrid> 
+
+                        <h:panelGroup id="dnevnik">
+                            <h:panelGrid columns="1">
+                                <h3>Pregled dnevnika</h3>
+                                <h:column>
+                                    <p:dataTable var="dnevnik" value="#{pregledDnevnika.dnevnici}">
+                                        <p:column headerText="ID">
+                                            <h:outputText value="#{dnevnik.id}" />
+                                        </p:column>
+                                        <p:column headerText="Korisnik">
+                                            <h:outputText value="#{dnevnik.korisnik}" />
+                                        </p:column>
+                                        <p:column headerText="Status">
+                                            <h:outputText value="#{dnevnik.status}" />
+                                        </p:column>
+                                        <p:column headerText="Trajanje">
+                                            <h:outputText value="#{dnevnik.trajanje}" />
+                                        </p:column>
+                                        <p:column headerText="IP adresa">
+                                            <h:outputText value="#{dnevnik.ipadresa}" />
+                                        </p:column>
+                                        <p:column headerText="Url">
+                                            <h:outputText value="#{dnevnik.url}" />
+                                        </p:column>
+                                        <p:column headerText="Vrijeme">
+                                            <h:outputText value="#{pomocnoZrno.formatDate(dnevnik.vrijeme)}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:column>
+                            </h:panelGrid>
+                        </h:panelGroup>                        
+                    </h:form>
+                </h:panelGroup>
             </ui:define>
 
         </ui:composition>
 
     </body>
+
 </html>
