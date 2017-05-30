@@ -15,31 +15,58 @@ public class OWMRESTHelper {
     
     private final String apiKey;
 
-
+    /**
+     *
+     * @param apiKey
+     */
     public OWMRESTHelper(String apiKey) {
         this.apiKey = apiKey;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getOWM_BASE_URI() {
         return OWM_BASE_URI;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String getOWM_Current_Path() {
         return "weather";
     }
         
+    /**
+     *
+     * @return
+     */
     public static String getOWM_Forecast_Path() {
         return "forecast";
     }
         
+    /**
+     *
+     * @return
+     */
     public static String getOWM_ForecastDaily_Path() {
         return "forecast/daily";
     }
         
+    /**
+     *
+     * @return
+     */
     public static String getOWM_StationsNear_Path() {
         return "station/find";
     }
         
+    /**
+     *
+     * @return
+     */
     public static String getOWM_Station_Path() {
         return "station";
     }

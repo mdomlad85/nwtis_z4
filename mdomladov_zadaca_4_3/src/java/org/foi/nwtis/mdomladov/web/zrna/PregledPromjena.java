@@ -17,8 +17,10 @@ import org.foi.nwtis.mdomladov.ejb.sb.PromjeneFacade;
 import org.foi.nwtis.mdomladov.web.kontrole.LogerHelper;
 
 /**
- *
- * @author Zeus
+ * Zrno koje se koristi za 
+ * pregled promjena na uređajima
+ * 
+ * @author Marko Domladovac
  */
 @Named(value = "pregledPromjena")
 @SessionScoped
@@ -50,6 +52,9 @@ public class PregledPromjena implements Serializable {
         loger = new LogerHelper(dnevnikFacade);
     }
     
+    /**
+     *
+     */
     public void filtrirajPodatke(){
         loger.setStartTime((int)System.currentTimeMillis());
         promjene = promjeneFacade.filter(searchId, searchNaziv); 
@@ -57,26 +62,50 @@ public class PregledPromjena implements Serializable {
         loger.setStartTime(null);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSearchId() {
         return searchId;
     }
 
+    /**
+     *
+     * @param searchId
+     */
     public void setSearchId(String searchId) {
         this.searchId = searchId;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSearchNaziv() {
         return searchNaziv;
     }
 
+    /**
+     *
+     * @param searchNaziv
+     */
     public void setSearchNaziv(String searchNaziv) {
         this.searchNaziv = searchNaziv;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Promjene> getPromjene() {
         return promjene;
     }
 
+    /**
+     *
+     * @param promjene
+     */
     public void setPromjene(List<Promjene> promjene) {
         this.promjene = promjene;
     }

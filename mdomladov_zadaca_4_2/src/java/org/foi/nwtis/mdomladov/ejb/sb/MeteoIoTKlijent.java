@@ -13,8 +13,10 @@ import org.foi.nwtis.mdomladov.web.podaci.Lokacija;
 import org.foi.nwtis.mdomladov.web.podaci.MeteoPrognoza;
 
 /**
- *
- * @author Zeus
+ * Klasa za dohvat meteo podataka
+ * i za dohvat lokacije
+ * 
+ * @author Marko Domladovac
  */
 @Stateless
 @LocalBean
@@ -22,16 +24,33 @@ public class MeteoIoTKlijent {
     
     private String apiKey;
 
+    /**
+     *
+     * @param apiKey
+     */
     public void postaviKorisnickePodatke(String apiKey) {
         this.apiKey = apiKey;
     }
 
+    /**
+     * Dohvat koordinata za adresu
+     * 
+     * @param adresa
+     * @return 
+     */
     public Lokacija dajLokaciju(String adresa) {
         GMKlijent gmklijent = new GMKlijent();
         
         return gmklijent.getGeoLocation(adresa);
     }
 
+    /**
+     * Dohvat prognoza za adresu
+     * 
+     * @param id
+     * @param adresa
+     * @return 
+     */
     public MeteoPrognoza[] dajMeteoPrognoze(int id, String adresa) {
         GMKlijent gmklijent = new GMKlijent();
         Lokacija lokacija = gmklijent.getGeoLocation(adresa);
@@ -42,12 +61,25 @@ public class MeteoIoTKlijent {
                 lokacija.getLongitude());
     }
 
+    /**
+     * Dohvat adrese za geolokaciju
+     * 
+     * @param lokacija
+     * @return 
+     */
     public String dajAdresu(Lokacija lokacija) {
         GMKlijent gmklijent = new GMKlijent();
         
         return gmklijent.getAdresaByLocation(lokacija);
     }
 
+    /**
+     * Dohvat adrese za geolokaciju
+     * 
+     * @param latitude
+     * @param longitude
+     * @return 
+     */
     public String dajAdresu(double latitude, double longitude) {
         GMKlijent gmklijent = new GMKlijent();
         Lokacija lokacija = new Lokacija(String.valueOf(latitude), String.valueOf(longitude));

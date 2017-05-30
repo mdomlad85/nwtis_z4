@@ -16,9 +16,11 @@ import org.foi.nwtis.mdomladov.konfiguracije.NeispravnaKonfiguracija;
 import org.foi.nwtis.mdomladov.konfiguracije.NemaKonfiguracije;
 
 /**
- * Web application lifecycle listener.
+ * Slušač aplikacije
+ * Prilikom pokretanja aplikacije učitava
+ * datoteku s konfiguracijom
  *
- * @author Zeus
+ * @author Marko Domladovac
  */
 public class SlusacAplikacije implements ServletContextListener {
 

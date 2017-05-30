@@ -22,8 +22,9 @@ import org.foi.nwtis.mdomladov.web.kontrole.LogerHelper;
 import org.primefaces.event.SelectEvent;
 
 /**
- *
- * @author Zeus
+ * Zrno koje se koristi za pregled dnevnika
+ * 
+ * @author Marko Domladovac
  */
 @Named(value = "pregledDnevnika")
 @SessionScoped

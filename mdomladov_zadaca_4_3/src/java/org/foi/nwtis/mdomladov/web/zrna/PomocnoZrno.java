@@ -6,14 +6,15 @@
 package org.foi.nwtis.mdomladov.web.zrna;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 
 /**
- *
- * @author Zeus
+ * Pomoćno zrno sa metodama 
+ * za pomoć pri prikazu
+ * 
+ * @author Marko Domladovac
  */
 @Named(value = "pomocnoZrno")
 @ApplicationScoped
@@ -26,7 +27,7 @@ public class PomocnoZrno {
     private String locale = "hr";
 
     /**
-     * Creates a new instance of PomocnoZrno
+     * Konstruktor PomocnoZrno
      */
     public PomocnoZrno() {
     }    

@@ -15,37 +15,72 @@ public class Lokacija {
     private String longitude;
     private String adresa;    
 
+    /**
+     *
+     */
     public Lokacija() {
     }
 
+    /**
+     *
+     * @param latitude
+     * @param longitude
+     */
     public Lokacija(String latitude, String longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
+    /**
+     *
+     * @param latitude
+     * @param longitude
+     * @param adresa
+     */
     public Lokacija(String latitude, String longitude, String adresa) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.adresa = adresa;
     }
     
+    /**
+     *
+     * @param latitude
+     * @param longitude
+     */
     public void postavi(String latitude, String longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLatitude() {
         return latitude;
     }
 
+    /**
+     *
+     * @param latitude
+     */
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLongitude() {
         return longitude;
     }
 
+    /**
+     *
+     * @param longitude
+     */
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
@@ -55,10 +90,18 @@ public class Lokacija {
         return String.format("%s, %s", latitude, longitude);
     }   
 
+    /**
+     *
+     * @return
+     */
     public String getAdresa() {
         return adresa;
     }
 
+    /**
+     *
+     * @param adresa
+     */
     public void setAdresa(String adresa) {
         this.adresa = adresa;
     }

@@ -13,7 +13,6 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -22,8 +21,10 @@ import org.foi.nwtis.mdomladov.web.podaci.MeteoPodaci;
 import org.foi.nwtis.mdomladov.web.podaci.MeteoPrognoza;
 
 /**
- *
- * @author nwtis_1
+ * Klasa koja služi za komunikaciju sa
+ * http://openweathermap.org/ servisom
+ * 
+ * @author Marko Domladovac
  */
 public class OWMKlijent {
 
@@ -31,12 +32,24 @@ public class OWMKlijent {
     OWMRESTHelper helper;
     Client client;
 
+    /**
+     *
+     * @param apiKey
+     */
     public OWMKlijent(String apiKey) {
         this.apiKey = apiKey;
         helper = new OWMRESTHelper(apiKey);
         client = ClientBuilder.newClient();
     }
 
+    /**
+     * Dohvaćanje prognoze za geolokaciju
+     * 
+     * @param id
+     * @param latitude
+     * @param longitude
+     * @return
+     */
     public MeteoPrognoza[] getWeatherForecast(int id, String latitude, String longitude) {
         MeteoPrognoza[] prognoza = null;
 
@@ -76,6 +89,13 @@ public class OWMKlijent {
         return prognoza;
     }
 
+    /**
+     * Pomoćna metoda za kreiranje objekta
+     * 
+     * @param weatherJson
+     * @param cityJson
+     * @return 
+     */
     private MeteoPodaci createMeteoPrognoza(JsonObject weatherJson, JsonObject cityJson) {
         
 

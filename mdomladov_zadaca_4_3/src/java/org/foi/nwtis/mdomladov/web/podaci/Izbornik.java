@@ -6,8 +6,10 @@
 package org.foi.nwtis.mdomladov.web.podaci;
 
 /**
- *
- * @author Zeus
+ * Klasa koja se koristi
+ * za popunjavanje select liste (key, value)
+ * 
+ * @author Marko Domladovac
  */
 public class Izbornik {
     

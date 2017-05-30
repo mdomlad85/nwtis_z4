@@ -7,14 +7,15 @@ package org.foi.nwtis.mdomladov.web.kontrole;
 
 import java.util.Date;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import org.foi.nwtis.mdomladov.ejb.eb.Dnevnik;
 import org.foi.nwtis.mdomladov.ejb.sb.DnevnikFacade;
 
 /**
- *
- * @author Zeus
+ * Klasa koja pomaže prilikom logiranja 
+ * akcija korisnika
+ * 
+ * @author Marko Domladovac
  */
 public class LogerHelper {
 
@@ -30,6 +31,12 @@ public class LogerHelper {
         this.startTime = startTime;
     }
 
+    /**
+     * metoda koja kreira potrebne podatke i logira ih
+     * 
+     * @param metoda
+     * @return 
+     */
     public boolean logiraj(String metoda) {
         if (startTime != null) {
             Dnevnik dnevnik = new Dnevnik();

@@ -21,18 +21,29 @@ import javax.ws.rs.core.MediaType;
 import org.foi.nwtis.mdomladov.web.podaci.Lokacija;
 
 /**
- *
- * @author nwtis_1
+ * Klasa za dohvat podataka
+ * sa GMaps REST servisa
+ * 
+ * @author Marko Domladovac
  */
 public class GMKlijent {
 
     GMRESTHelper helper;
     Client client;
 
+    /**
+     *
+     */
     public GMKlijent() {
         client = ClientBuilder.newClient();
     }
 
+    /**
+     * Dohvat geolokacije za adresu
+     * 
+     * @param adresa
+     * @return 
+     */
     public Lokacija getGeoLocation(String adresa) {
         try {
             WebTarget webResource = client.target(GMRESTHelper.getGM_BASE_URI())
@@ -62,6 +73,12 @@ public class GMKlijent {
         return null;
     }
 
+    /**
+     * Dohvat adrese za GeoLkaciju
+     * 
+     * @param lokacija
+     * @return 
+     */
     public String getAdresaByLocation(Lokacija lokacija) {
         WebTarget webResource = client.target(GMRESTHelper.getGM_BASE_URI())
                 .path("maps/api/geocode/json");

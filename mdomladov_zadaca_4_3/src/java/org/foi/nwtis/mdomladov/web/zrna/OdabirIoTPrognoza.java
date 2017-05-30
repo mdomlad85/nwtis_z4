@@ -31,8 +31,10 @@ import org.foi.nwtis.mdomladov.web.podaci.MeteoPrognoza;
 import org.foi.nwtis.mdomladov.web.slusaci.SlusacAplikacije;
 
 /**
- *
- * @author Zeus
+ * Klasa za manipulaciju sa podacima o uređajima
+ * i dohvaćanje prognoze za iste
+ * 
+ * @author Marko Domladovac
  */
 @Named(value = "odabirIoTPrognoza")
 @SessionScoped
@@ -99,7 +101,7 @@ public class OdabirIoTPrognoza implements Serializable {
     private LogerHelper loger;
 
     /**
-     * Creates a new instance of OdabirIoTPrognoza
+     * Konstruktor OdabirIoTPrognoza
      */
     public OdabirIoTPrognoza() {
         raspoloziviUredjaji = new ArrayList<>();
@@ -109,6 +111,9 @@ public class OdabirIoTPrognoza implements Serializable {
         meteoPrognoza = new ArrayList<>();
     }
 
+    /**
+     * Inicijalizacija gdje je EJB učitan
+     */
     @PostConstruct
     private void init() {
         loger = new LogerHelper(dnevnikFacade);
